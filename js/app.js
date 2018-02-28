@@ -66,18 +66,27 @@ function insertarCarrito(curso) {
 function eliminarCurso(e) {
     e.preventDefault();
 
-    let curso;
+    let curso,
+        cursoId;
 
     if (e.target.classList.contains('borrar-curso')) {
         e.target.parentElement.parentElement.remove();
+
+        curso = e.target.parentElement.parentElement;
+
+        cursoId = curso.querySelector('a').getAttribute('data-id');
     }
+
+    eliminarCursoLS(cursoId);
 }
 
-//Deelte all course from the shopping cart
-function vaciarCarrito(e) {
+//Delete all course from the shopping cart
+function vaciarCarrito() {
     while (listaCursos.firstChild) {
         listaCursos.removeChild(listaCursos.firstChild);
     }
+
+    vaciarLocalStorage();
 
     return false;
 }
@@ -129,4 +138,24 @@ function leerLocalStorage() {
 
         listaCursos.appendChild(row);
     });
+}
+
+//Delete a course in Local Storage
+function eliminarCursoLS(curso) {
+    let cursosLS;
+
+    cursosLS = obtenerCursosLS();
+
+    cursosLS.forEach(function (cursoLS, index) {
+        if (cursoLS.id === curso) {
+            cursosLS.splice(index, 1);
+        }
+    });
+
+    localStorage.setItem('cursos', JSON.stringify(cursosLS));
+}
+
+
+function vaciarLocalStorage() {
+    localStorage.clear();
 }
