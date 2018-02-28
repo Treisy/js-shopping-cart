@@ -13,6 +13,8 @@ function cargarEventListeners() {
     carrito.addEventListener('click', eliminarCurso);
 
     vaciarCarritoBtn.addEventListener('click', vaciarCarrito);
+
+    document.addEventListener('DOMContentLoaded', leerLocalStorage);
 }
 
 
@@ -103,4 +105,28 @@ function obtenerCursosLS() {
     }
 
     return cursosLS;
+}
+
+//Show courses in Local Storage
+function leerLocalStorage() {
+    let cursosLS;
+
+    cursosLS = obtenerCursosLS();
+
+    cursosLS.forEach(function(curso) {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+            <td>
+                 <img src="${curso.imagen}" width="100">
+            </td>
+            <td>${curso.titulo}</td>
+            <td>${curso.precio}</td>
+            <td>
+                <a href="#" class="borrar-curso" data-id="${curso.id}">X</a>
+            </td>
+        `;
+
+        listaCursos.appendChild(row);
+    });
 }
