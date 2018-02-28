@@ -56,6 +56,8 @@ function insertarCarrito(curso) {
     `;
 
     listaCursos.appendChild(row);
+
+    guardarCursoLocalStorage(curso);
 }
 
 //Delete course from the shopping cart
@@ -76,4 +78,29 @@ function vaciarCarrito(e) {
     }
 
     return false;
+}
+
+//Save courses in Local Storage
+function guardarCursoLocalStorage(curso) {
+    let cursos;
+
+    cursos = obtenerCursosLS();
+
+    cursos.push(curso);
+
+    localStorage.setItem('cursos', JSON.stringify(cursos));
+}
+
+//Get courses in Local Storage
+function obtenerCursosLS() {
+    let cursosLS
+
+    if (localStorage.getItem('cursos') === null) {
+        cursosLS = [];
+    }
+    else {
+         cursosLS = JSON.parse(localStorage.getItem('cursos'));
+    }
+
+    return cursosLS;
 }
