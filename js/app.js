@@ -9,6 +9,8 @@ cargarEventListeners();
 
 function cargarEventListeners() {
     cursos.addEventListener('click', comprarCurso);
+
+     carrito.addEventListener('click', eliminarCurso);
 }
 
 
@@ -52,4 +54,15 @@ function insertarCarrito(curso) {
     `;
 
     listaCursos.appendChild(row);
+}
+
+//Delete course from the shopping cart
+function eliminarCurso(e) {
+    e.preventDefault();
+
+    let curso;
+
+    if (e.target.classList.contains('borrar-curso')) {
+        e.target.parentElement.parentElement.remove();
+    }
 }
